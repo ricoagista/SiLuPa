@@ -10,7 +10,7 @@
 
 # Flowchart 1
 <div align="center">
-<img src="img/flowchart_1.jpg" alt="Logo" width="500">
+<img src="img/flowchart_1.jpg" alt="Logo" width="400">
 </div>
 
 **Berikut beberapa service AWS yang saya gunakan :**
