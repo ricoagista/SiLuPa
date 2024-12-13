@@ -8,65 +8,49 @@
     <br />
 </div>
 
-# Flowchart 1
+# Abtraksi
+**Data Lumbung panen harus tersimpan dengan baik untuk memudahkan sebuah laporan. Laporan hasil panen sangat dibutuhkan untuk audit keluar masuk hasil panen. Oleh karena itu dibutuhkan sebuah sistem pengelolaan yang mampu untuk menyimpan dan menampilkan laporan keluar masuknya hasil panen. Sistem Lumbung panen adalah sebuah sistem yang digunakan untuk memantau komoditas panen, meliputi input hasil panen ke lumbung dan menampilkan jumlah panen. Selain itu sistem ini akan menampilkan laporan lumbung. Dengan adanya Sistem Lumbung Padi maka petani akan mendapatkan kemudahan dalam mengelola hasil panen.**
 
+# Maksud dan Tujuan
+**Maksud dari Sistem Lumbung Panen adalah memudahkan para petani dalam mengelola hasil panen meliputi input data barang ke stok, dan meningkatkan efektivitas petani dalam kegiatan bertani. Selain itu, Sistem Lumbung Panen ini membantu para petani menganalisa tanaman dan jenis benih apa yang cocok untuk musim-musim tertentu.**
+
+# Flowchart 1
 <div align="center">
 <img src="img/flowchart_1.jpg" alt="Logo" width="500">
 </div>
 
+**Berikut alur flowchart :**
 
-**Berikut beberapa service AWS yang saya gunakan :**
-
-- **Elastic Block Store (EBS)**
-- **Elastic File System (EFS)**
-- **Virtual Private Cloud (VPC)**
-- **Elastic Compute Cloud (EC2)**
-- **Relational Database Service (RDS)**
+- **Program ini dimulai dengan mencoba membuka sebuah file dalam mode input. Jika file berhasil dibuka, maka program akan melanjutkan ke proses selanjutnya. Namun, jika file tidak ditemukan atau tidak dapat dibuka, program akan menampilkan pesan bahwa file tidak ada dan kemudian berakhir.**
 
 # Flowchart 2
-
 <div align="center">
 <img src="img/flowchart_2.jpg" alt="Logo" width="500">
 </div>
 
+**Berikut alur flowchart :**
 
-**Berikut beberapa service AWS yang saya gunakan :**
+**Program ini dimulai dengan menampilkan menu utama yang berisi pilihan operasi CRUD (Create, Read, Update, Delete) untuk mengelola data tanaman. Pengguna kemudian memilih salah satu operasi yang ingin dilakukan.**
 
-- **Elastic Block Store (EBS)**
-- **Elastic File System (EFS)**
-- **Virtual Private Cloud (VPC)**
-- **Elastic Compute Cloud (EC2)**
-- **Relational Database Service (RDS)**
+- **Create: Pengguna akan diminta memasukkan data tanaman baru, termasuk jenis tanaman, berat benih, musim tanam, dan tanggal panen. Data yang dimasukkan kemudian akan disimpan.**
 
-# Kasus
-**Anda mendapatkan project untuk membuat 2 web (statis dan dinamis)**
+- **Read: Program akan menampilkan daftar semua data tanaman yang sudah tersimpan, termasuk semua atributnya.**
 
-# Goal
--    **User dapat membuat web dinamis di instance Ubuntu**
--    **User dapat membuat web statis di instance Debian**
--    **User dapat menghubungkan web dinamis dengan database**
--    **User dapat membuat direktori dan file di masing-masing EBS**
--    **Kedua EC2 (Debian dan Ubuntu) dapat terhubung ke EFS**
+- **Update: Pengguna memilih data tanaman yang ingin diubah, kemudian dapat mengubah salah satu atau semua atribut data tanaman tersebut.**
 
-# Ketentuan
-- **Website diupload di Github**
-- **IP VPC : 192.168.1.0/25**  
+- **Delete: Pengguna memilih data tanaman yang ingin dihapus, dan data tersebut akan dihapus dari sistem.**
 
-     - **Subnet Public 1    :  192.168.1.0/27** 
+**Setelah melakukan salah satu operasi, pengguna dapat kembali ke menu utama atau memilih untuk keluar dari program.**
 
-     - **Subnet Private 1  :  192.168.1.32/27**
 
-    - **Subnet Public 2    :  192.168.1.64/27**
 
-    - **Subnet Private 2  :  192.168.1.96/27**
-- **Membuat dua instance dengan OS yang berbeda**
-- **Instance 1 menggunakan OS Ubuntu**
-- **Instance 2 menggunakan OS Debian**
-- **Name tag EC2 : WebServer_Ubuntu dan WebServer_Debian**    
-- **Membuat 2 EBS Volume untuk di mount di masing-masing instance**
-- **Name tag EBS : Volume_Ubuntu dan Volume_Debian**
-- **User dapat membuat direktori dan file txt di masing-masing EBS**
-- **Nama direktori : ebs-ubuntu dengan file ubuntu.txt dan ebs-debian dengan file ubuntu.txt**
-- **Kedua EC2 (Ubuntu dan Debian) dapat terhubung ke EFS (ditest dengan cara membuat direktori dari kedua instance)**
-- **Rsync isi dir web dinamis /var/www/html ke ebs**
-- **Rsync isi /var/log ke efs**
+# Analisa Sistem
+| No. | Modul                | Keterangan                                                                                                                                                                                                                                                        |
+|-----|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1   | Membuat file          | Sistem akan membuat sebuah File dengan format .csv                                                                                                                                                                                                                                 |
+| 2   | Input barang ke lumbung | Sistem akan menyediakan form untuk input barang ke lumbung meliputi:                                                                                                                                                                                                                   |
+|     |                      | 1. Jenis Tanaman                                                                                                                                                                                                                                                            |
+|     |                      | 2. Berat hasil panen                                                                                                                                                                                                                                                          |
+|     |                      | 3. Jenis benih                                                                                                                                                                                                                                                            |
+|     |                      | 4. Musim tanam                                                                                                                                                                                                                                                            |
+|     |                      | 5. Tanggal panen                                                                                                                                                                                                                                                           |
