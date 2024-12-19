@@ -27,7 +27,7 @@ void tambahProduk() {
 
     Produk produk;
     printf("Masukkan Tanggal Panen (DD-MM-YYYY): ");
-    scanf("%s", produk.tanggal_panen);
+    scanf("%s", &produk.tanggal_panen);
 
     Produk temp;
     int found = 0;
@@ -47,9 +47,9 @@ void tambahProduk() {
     }
 
     printf("Masukkan Jenis Tanaman: ");
-    scanf("%s", produk.jenis_tanaman);
+    scanf("%s", &produk.jenis_tanaman);
     printf("Masukkan Jenis Benih: ");
-    scanf("%s", produk.jenis_benih);
+    scanf("%s", &produk.jenis_benih);
     printf("Masukkan Harga: ");
     scanf("%f", &produk.harga);
     printf("Masukkan Stok: ");
@@ -96,9 +96,9 @@ void updateInformasiProduk() {
         if (strcmp(produk.tanggal_panen, tanggal_panen) == 0) {
             found = 1;
             printf("Masukkan Jenis Tanaman Baru: ");
-            scanf("%s", produk.jenis_tanaman);
+            scanf("%s", &produk.jenis_tanaman);
             printf("Masukkan Jenis Benih Baru: ");
-            scanf("%s", produk.jenis_benih);
+            scanf("%s", &produk.jenis_benih);
             printf("Masukkan Harga Baru: ");
             scanf("%f", &produk.harga);
             printf("Masukkan Stok Baru: ");
@@ -131,7 +131,7 @@ void hapusProduk() {
     Produk produk;
     char tanggal_panen[50];
     printf("Masukkan Tanggal Panen yang ingin dihapus (YYYY-MM-DD): ");
-    scanf("%s", tanggal_panen);
+    scanf("%s", &tanggal_panen);
 
     int found = 0;
     Produk produkList[MAX_PRODUK];
