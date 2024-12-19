@@ -12,6 +12,33 @@ typedef struct {
     int berat_hasil_panen;  // Changed from stok
 } Produk;
 
+// Fungsi untuk menghitung rata-rata berat hasil panen
+void hitungRataRataBeratHasilPanen() {
+    FILE *file = fopen(FILENAME, "r");
+    if (file == NULL) {
+        printf("Error: Tidak dapat membuka file.\n");
+        return;
+    }
+
+    Produk produk;
+    int totalBerat = 0;
+    int count = 0;
+
+    while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
+        totalBerat += produk.berat_hasil_panen;
+        count++;
+    }
+    fclose(file);
+
+    if (count == 0) {
+        printf("Tidak ada data produk untuk dihitung.\n");
+    } else {
+        double rataRata = (double)totalBerat / count;
+        printf("Rata-rata berat hasil panen: %.2f kg\n", rataRata);
+    }
+}
+
+
 void welcomeMessage() {
     printf("====================================\n");
     printf("Sistem Lumbung Padi (SiLuPa)\n");
@@ -64,16 +91,19 @@ void tampilkanDaftarProduk() {
     FILE *file = fopen(FILENAME, "r");
     if (file == NULL) {
         printf("Error: Tidak dapat membuka file.\n");
-        return;
-    }
+        return;  }
 
     Produk produk;
     printf("Daftar Produk:\n");
     printf("%-15s %-15s %-15s %-15s %-10s\n", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Tanggal Tanam", "Berat (kg)");
     while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
         printf("%-15s %-15s %-15s %-15s %-5d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
+   break;
     }
+
     fclose(file);
+
+
 }
 
 void updateInformasiProduk() {
@@ -169,7 +199,7 @@ int main() {
         printf("4. Hapus data produk\n");
         printf("5. Keluar\n");
         printf("Masukkan pilihan: ");
-        scanf("%d", &pilihan);
+        scanf(" %d", &pilihan);
 
         switch (pilihan) {
             case 1:
