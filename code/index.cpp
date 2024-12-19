@@ -13,7 +13,7 @@ typedef struct {
 } Produk;
 
 // Fungsi untuk menghitung rata-rata berat hasil panen
-void hitungRataRataBeratHasilPanen() {
+void TampilkanLaporan() {
     FILE *file = fopen(FILENAME, "r");
     if (file == NULL) {
         printf("Error: Tidak dapat membuka file.\n");
@@ -41,7 +41,7 @@ void hitungRataRataBeratHasilPanen() {
 
 void welcomeMessage() {
     printf("====================================\n");
-    printf("Sistem Lumbung Padi (SiLuPa)\n");
+    printf("Sistem Lumbung Panen (SiLuPa)\n");
     printf("====================================\n");
 }
 
@@ -53,32 +53,17 @@ void tambahProduk() {
     }
 
     Produk produk;
-    printf("Masukkan Tanggal Panen (DD-MM-YYYY): ");
-    scanf("%s", &produk.tanggal_panen);
+    printf("Masukkan Tanggal tanam (DD-MM-YYYY): ");
+    scanf("%s", &produk.tanggal_tanam);
 
-    Produk temp;
-    int found = 0;
-    FILE *checkFile = fopen(FILENAME, "r");
-    while (fscanf(checkFile, "%s %s %s %s %d\n", temp.tanggal_panen, temp.jenis_tanaman, temp.jenis_benih, temp.tanggal_tanam, &temp.berat_hasil_panen) != EOF) {
-        if (strcmp(temp.tanggal_panen, produk.tanggal_panen) == 0) {
-            found = 1;
-            break;
-        }
-    }
-    fclose(checkFile);
-
-    if (found) {
-        printf("Tanggal Panen SUDAH TERDAFTAR. Silakan masukkan Tanggal Panen yang berbeda.\n");
-        fclose(file);
-        return;
-    }
+   
 
     printf("Masukkan Jenis Tanaman: ");
     scanf("%s", &produk.jenis_tanaman);
     printf("Masukkan Jenis Benih: ");
     scanf("%s", &produk.jenis_benih);
-    printf("Masukkan Tanggal Tanam: ");
-    scanf("%s", &produk.tanggal_tanam);
+    printf("Masukkan Tanggal Panen: ");
+    scanf("%s", &produk.tanggal_panen);
     printf("Masukkan Berat Hasil Panen (kg): ");
     scanf("%d", &produk.berat_hasil_panen);
 
@@ -95,11 +80,14 @@ void tampilkanDaftarProduk() {
 
     Produk produk;
     printf("Daftar Produk:\n");
-    printf("%-15s %-15s %-15s %-15s %-10s\n", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Tanggal Tanam", "Berat (kg)");
+    printf("+-----------------+-----------------+-----------------+-----------------+-----------------+\n");
+    printf("| Tanggal Panen   | Jenis Tanaman   | Jenis Benih     | Tanggal Tanam   | Berat (kg)      |\n");
+    printf("+-----------------+-----------------+-----------------+-----------------+-----------------+\n");
     while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
-        printf("%-15s %-15s %-15s %-15s %-5d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
-   break;
+        printf("| %-15s | %-15s | %-15s | %-15s | %-15d |\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
     }
+    printf("+-----------------+-----------------+-----------------+-----------------+-----------------+\n");
+    
 
     fclose(file);
 
@@ -197,7 +185,8 @@ int main() {
         printf("2. Tampilkan daftar produk\n");
         printf("3. Uptade data produk\n");
         printf("4. Hapus data produk\n");
-        printf("5. Keluar\n");
+        printf("5. Tampilkan Hasil Laporan\n");
+        printf("6. Keluar\n");
         printf("Masukkan pilihan: ");
         scanf(" %d", &pilihan);
 
@@ -215,12 +204,15 @@ int main() {
                 hapusProduk();
                 break;
             case 5:
+                TampilkanLaporan();
+                break;
+            case 6:
                 printf("Terima kasih telah menggunakan Sistem Lumbung Padi (SiLuPa).\n");
                 break;
             default:
                 printf("Pilihan tidak valid. Silakan coba lagi.\n");
         }
-    } while (pilihan != 5);
+    } while (pilihan != 6);
 
     return 0;
 }
