@@ -5,16 +5,17 @@
 #define FILENAME "silupa_databases.txt"
 
 typedef struct {
+    int periode_panen;
     char tanggal_panen[50];
     char jenis_tanaman[50];
     char jenis_benih[50];
-    char tanggal_tanam[50];  // Changed from musim_panen
-    int berat_hasil_panen;  // Changed from stok
+    float harga;
+    int stok;
 } Produk;
 
 void welcomeMessage() {
     printf("====================================\n");
-    printf("Sistem Lumbung Padi (SiLuPa)\n");
+    printf("Selamat Datang di SiLUPA\n");
     printf("====================================\n");
 }
 
@@ -26,38 +27,24 @@ void tambahProduk() {
     }
 
     Produk produk;
-    printf("Masukkan Tanggal Panen (DD-MM-YYYY): ");
-    scanf("%s", &produk.tanggal_panen);
+    printf("Masukkan Periode Panen: ");
+    scanf("%s", produk.periode_panen);
 
-    Produk temp;
-    int found = 0;
-    FILE *checkFile = fopen(FILENAME, "r");
-    while (fscanf(checkFile, "%s %s %s %s %d\n", temp.tanggal_panen, temp.jenis_tanaman, temp.jenis_benih, temp.tanggal_tanam, &temp.berat_hasil_panen) != EOF) {
-        if (strcmp(temp.tanggal_panen, produk.tanggal_panen) == 0) {
-            found = 1;
-            break;
+     if (Produk.periode_panen > 0) {
+        for (int i = 0; i < 4; i++) {
+   	   	  printf("Masukkan Jenis Tanaman: ");
+   	   	  scanf("%s", produk.jenis_tanaman);
+   	   	  printf("Masukkan Jenis Benih: ");
+   	    	scanf("%s", produk.jenis_benih);
+ 		   	printf("Masukkan Harga: ");
+   	 scanf("%f", &produk.harga);
+    printf("Masukkan Berat Panen: ");
+    scanf("%d", &produk.stok);
         }
-    }
-    fclose(checkFile);
-
-    if (found) {
-        printf("Tanggal Panen SUDAH TERDAFTAR. Silakan masukkan Tanggal Panen yang berbeda.\n");
-        fclose(file);
-        return;
-    }
-
-    printf("Masukkan Jenis Tanaman: ");
-    scanf("%s", &produk.jenis_tanaman);
-    printf("Masukkan Jenis Benih: ");
-    scanf("%s", &produk.jenis_benih);
-    printf("Masukkan Tanggal Tanam: ");
-    scanf("%s", &produk.tanggal_tanam);
-    printf("Masukkan Berat Hasil Panen (kg): ");
-    scanf("%d", &produk.berat_hasil_panen);
-
-    fprintf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
-    fclose(file);
-    printf("Produk berhasil ditambahkan.\n");
+	 }
+fprintf(file, "%s %s %s %.2f %f\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
+fclose(file);
+printf("Produk berhasil ditambahkan.\n");
 }
 
 void tampilkanDaftarProduk() {
@@ -69,9 +56,9 @@ void tampilkanDaftarProduk() {
 
     Produk produk;
     printf("Daftar Produk:\n");
-    printf("%-15s %-15s %-15s %-15s %-10s\n", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Tanggal Tanam", "Berat (kg)");
-    while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
-        printf("%-15s %-15s %-15s %-15s %-5d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
+    printf("|%-15s|%-15s|%-15s|%-15s|%-10s\n|", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Harga", "Stok");
+    while (fscanf(file, "%s %s %s %f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
+        printf("|%-15s|%-15s|%-15s|%-15.2f|%-5d\n|", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
     }
     fclose(file);
 }
@@ -92,17 +79,17 @@ void updateInformasiProduk() {
     Produk produkList[MAX_PRODUK];
     int count = 0;
 
-    while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
+    while (fscanf(file, "%s %s %s %f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
         if (strcmp(produk.tanggal_panen, tanggal_panen) == 0) {
             found = 1;
             printf("Masukkan Jenis Tanaman Baru: ");
-            scanf("%s", &produk.jenis_tanaman);
+            scanf("%s", produk.jenis_tanaman);
             printf("Masukkan Jenis Benih Baru: ");
-            scanf("%s", &produk.jenis_benih);
-            printf("Masukkan Tanggal Tanam Baru: ");
-            scanf("%s", &produk.tanggal_tanam);
-            printf("Masukkan Berat Hasil Panen Baru (kg): ");
-            scanf("%d", &produk.berat_hasil_panen);
+            scanf("%s", produk.jenis_benih);
+            printf("Masukkan Harga Baru: ");
+            scanf("%f", &produk.harga);
+            printf("Masukkan Stok Baru: ");
+            scanf("%d", &produk.stok);
         }
         produkList[count++] = produk;
     }
@@ -115,7 +102,7 @@ void updateInformasiProduk() {
 
     file = fopen(FILENAME, "w");
     for (int i = 0; i < count; i++) {
-        fprintf(file, "%s %s %s %s %d\n", produkList[i].tanggal_panen, produkList[i].jenis_tanaman, produkList[i].jenis_benih, produkList[i].tanggal_tanam, produkList[i].berat_hasil_panen);
+        fprintf(file, "%s %s %s %.2f %d\n", produkList[i].tanggal_panen, produkList[i].jenis_tanaman, produkList[i].jenis_benih, produkList[i].harga, produkList[i].stok);
     }
     fclose(file);
     printf("Informasi produk berhasil diupdate.\n");
@@ -131,13 +118,13 @@ void hapusProduk() {
     Produk produk;
     char tanggal_panen[50];
     printf("Masukkan Tanggal Panen yang ingin dihapus (YYYY-MM-DD): ");
-    scanf("%s", &tanggal_panen);
+    scanf("%s", tanggal_panen);
 
     int found = 0;
     Produk produkList[MAX_PRODUK];
     int count = 0;
 
-    while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
+    while (fscanf(file, "%s %s %s %f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
         if (strcmp(produk.tanggal_panen, tanggal_panen) != 0) {
             produkList[count++] = produk;
         } else {
@@ -153,7 +140,7 @@ void hapusProduk() {
 
     file = fopen(FILENAME, "w");
     for (int i = 0; i < count; i++) {
-        fprintf(file, "%s %s %s %s %d\n", produkList[i].tanggal_panen, produkList[i].jenis_tanaman, produkList[i].jenis_benih, produkList[i].tanggal_tanam, produkList[i].berat_hasil_panen);
+        fprintf(file, "%s %s %s %.2f %d\n", produkList[i].tanggal_panen, produkList[i].jenis_tanaman, produkList[i].jenis_benih, produkList[i].harga, produkList[i].stok);
     }
     fclose(file);
     printf("Produk dengan Tanggal Panen %s berhasil dihapus.\n", tanggal_panen);
@@ -168,7 +155,7 @@ int main() {
         printf("3. Uptade data produk\n");
         printf("4. Hapus data produk\n");
         printf("5. Keluar\n");
-        printf("Masukkan pilihan: ");
+        printf("Pilih menu: ");
         scanf("%d", &pilihan);
 
         switch (pilihan) {
@@ -185,8 +172,8 @@ int main() {
                 hapusProduk();
                 break;
             case 5:
-                printf("Terima kasih telah menggunakan Sistem Lumbung Padi (SiLuPa).\n");
-                break;
+                printf("Terima kasih! Program selesai.\n");
+                   break;
             default:
                 printf("Pilihan tidak valid. Silakan coba lagi.\n");
         }
