@@ -8,11 +8,10 @@ typedef struct {
     char tanggal_panen[50];
     char jenis_tanaman[50];
     char jenis_benih[50];
-    char tanggal_tanam[50];  // Changed from musim_panen
-    int berat_hasil_panen;  // Changed from stok
+    char tanggal_tanam[50];
+    int berat_hasil_panen;
 } Produk;
 
-// Fungsi untuk menghitung rata-rata berat hasil panen
 void TampilkanLaporan() {
     FILE *file = fopen(FILENAME, "r");
     if (file == NULL) {
@@ -40,9 +39,14 @@ void TampilkanLaporan() {
 
 
 void welcomeMessage() {
-    printf("====================================\n");
-    printf("Sistem Lumbung Panen (SiLuPa)\n");
-    printf("====================================\n");
+    printf("   _____ _     _                   _                     _                         _____                         _ _    _____ _ _           _____        _ _ \n");
+    printf("  / ____(_)   | |                 | |                   | |                       |  __ \\                       ( | )  / ____(_) |         |  __ \\      ( | )\n");
+    printf(" | (___  _ ___| |_ ___ _ __ ___   | |    _   _ _ __ ___ | |__  _   _ _ __   __ _  | |__) |_ _ _ __   ___ _ __    V V  | (___  _| |    _   _| |__) |_ _   V V \n");
+    printf("  \\___ \\| / __| __/ _ \\ '_ ` _ \\  | |   | | | | '_ ` _ \\| '_ \\| | | | '_ \\ / _` | |  ___/ _` | '_ \\ / _ \\ '_ \\         \\___ \\| | |   | | | |  ___/ _` |      \n");
+    printf("  ____) | \\__ \\ ||  __/ | | | | | | |___| |_| | | | | | | |_) | |_| | | | | (_| | | |  | (_| | | | |  __/ | | |        ____) | | |___| |_| | |  | (_| |      \n");
+    printf(" |_____/|_|___/\\__\\___|_| |_| |_| |______\\__,_|_| |_| |_|_.__/ \\__,_|_| |_|\\__, | |_|   \\__,_|_| |_|\\___|_| |_|       |_____/|_|______\\__,_|_|   \\__,_|      \n");
+    printf("                                                                            __/ |                                                                            \n");
+    printf("                                                                           |___/                                                                             \n");
 }
 
 void tambahProduk() {
@@ -53,23 +57,19 @@ void tambahProduk() {
     }
 
     Produk produk;
-    printf("Masukkan Tanggal tanam (DD-MM-YYYY): ");
+    printf("\nMasukkan Tanggal tanam (DD-MM-YYYY): ");
     scanf("%s", &produk.tanggal_tanam);
-
-   
-
     printf("Masukkan Jenis Tanaman: ");
     scanf("%s", &produk.jenis_tanaman);
     printf("Masukkan Jenis Benih: ");
     scanf("%s", &produk.jenis_benih);
-    printf("Masukkan Tanggal Panen: ");
+    printf("Masukkan Tanggal Panen (DD-MM-YYYY): ");
     scanf("%s", &produk.tanggal_panen);
     printf("Masukkan Berat Hasil Panen (kg): ");
     scanf("%d", &produk.berat_hasil_panen);
-
     fprintf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, produk.berat_hasil_panen);
     fclose(file);
-    printf("Produk berhasil ditambahkan.\n");
+    printf("\nPRODUK BERHASIL DITAMBAHKAN.\n");
 }
 
 void tampilkanDaftarProduk() {
@@ -181,13 +181,14 @@ int main() {
     int pilihan;
     welcomeMessage();
     do {
-        printf("\n1. Masukan data produk\n");
+        printf("\nPilih Program:\n");
+        printf("\n1. Masukkan data produk\n");
         printf("2. Tampilkan daftar produk\n");
-        printf("3. Uptade data produk\n");
+        printf("3. Update data produk\n");
         printf("4. Hapus data produk\n");
         printf("5. Tampilkan Hasil Laporan\n");
         printf("6. Keluar\n");
-        printf("Masukkan pilihan: ");
+        printf("\nMasukkan pilihan: ");
         scanf(" %d", &pilihan);
 
         switch (pilihan) {
@@ -212,7 +213,7 @@ int main() {
             default:
                 printf("Pilihan tidak valid. Silakan coba lagi.\n");
         }
-    } while (pilihan != 64
+    } while (pilihan != 6
     );
 
     return 0;
