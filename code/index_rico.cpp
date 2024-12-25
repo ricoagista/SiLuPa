@@ -20,23 +20,43 @@ void TampilkanLaporan() {
     }
 
     Produk produk;
-    int totalBerat = 0;
-    int count = 0;
+    int totalBerat[4] = {0, 0, 0, 0};
+    int count[4] = {0, 0, 0, 0};
 
-    while (fscanf(file, "%s %s %s %s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
-        totalBerat += produk.berat_hasil_panen;
-        count++;
+    while (fscanf(file, "%49s %49s %49s %49s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
+        int month;
+        sscanf(produk.tanggal_panen, "%*4d-%2d-%*2d", &month); // mengambil bulan dari tanggal panen
+        int period = (month - 1) / 3; // 0: Jan-Mar, 1: Apr-Jun, 2: Jul-Sep, 3: Oct-Dec
+        totalBerat[period] += produk.berat_hasil_panen;
+        count[period]++;
     }
     fclose(file);
 
-    if (count == 0) {
-        printf("Tidak ada data produk untuk dihitung.\n");
-    } else {
-        double rataRata = (double)totalBerat / count;
-        printf("Rata-rata berat hasil panen: %.2f kg\n", rataRata);
-    }
-}
+    // Cetak laporan dalam format tabel
+    printf("\n+----------+---------------------+--------------------+\n");
+    printf("| Periode  | Rata-rata Berat (kg)  | Kategori Panen   |\n");
+    printf("+----------+-----------------------+------------------+\n");
 
+    for (int i = 0; i < 4; i++) {
+        printf("|    %d     |", i + 1);
+        if (count[i] == 0) {
+            printf("         N/A        |         N/A       |\n");
+        } else {
+            double rataRata = (double)totalBerat[i] / count[i];
+            const char *kategori;
+            if (rataRata > 1000) {
+                kategori = "Melimpah";
+            } else if (rataRata > 500) {
+                kategori = "Banyak";
+            } else {
+                kategori = "Sedikit";
+            }
+            printf("    %10.2f      |      %-5s      |\n", rataRata, kategori);
+        }
+    }
+    printf("+----------+---------------------+---------------------+\n");
+}
+    
 
 void welcomeMessage() {
     printf("   _____ _     _                   _                     _                         _____                         _ _    _____ _ _           _____        _ _ \n");
@@ -79,7 +99,7 @@ void tampilkanDaftarProduk() {
         return;  }
 
     Produk produk;
-    printf("Daftar Produk:\n");
+    printf("Isi Komoditas:\n");
     printf("+-----------------+-----------------+-----------------+-----------------+-----------------+\n");
     printf("| Tanggal Panen   | Jenis Tanaman   | Jenis Benih     | Tanggal Tanam   | Berat (kg)      |\n");
     printf("+-----------------+-----------------+-----------------+-----------------+-----------------+\n");
@@ -183,7 +203,7 @@ int main() {
     do {
         printf("\nPilih Program:\n");
         printf("\n1. Masukkan data produk\n");
-        printf("2. Tampilkan daftar produk\n");
+        printf("2. Tampilkan Komoditas\n");
         printf("3. Update data produk\n");
         printf("4. Hapus data produk\n");
         printf("5. Tampilkan Hasil Laporan\n");
@@ -213,8 +233,7 @@ int main() {
             default:
                 printf("Pilihan tidak valid. Silakan coba lagi.\n");
         }
-    } while (pilihan != 6
-    );
+    } while (pilihan != 6);
 
     return 0;
 }
