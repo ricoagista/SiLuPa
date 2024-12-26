@@ -33,14 +33,14 @@ void TampilkanLaporan() {
     fclose(file);
 
     // Cetak laporan dalam format tabel
-    printf("\n+----------+---------------------+--------------------+\n");
-    printf("| Periode  | Rata-rata Berat (kg)  | Kategori Panen   |\n");
-    printf("+----------+-----------------------+------------------+\n");
+    printf("+----------+----------------------+-------------------+ \n");
+    printf("| Periode  | Rata-rata Berat (kg) | Kategori Panen    | \n");
+    printf("+----------+----------------------+-------------------+ \n");
 
     for (int i = 0; i < 4; i++) {
         printf("|    %d     |", i + 1);
         if (count[i] == 0) {
-            printf("         N/A        |         N/A       |\n");
+            printf("         N/A          |        N/A        | \n");
         } else {
             double rataRata = (double)totalBerat[i] / count[i];
             const char *kategori;
@@ -51,10 +51,10 @@ void TampilkanLaporan() {
             } else {
                 kategori = "Sedikit";
             }
-            printf("    %10.2f      |      %-5s      |\n", rataRata, kategori);
+            printf("   %10.2f         |      %-5s      |\n", rataRata, kategori);
         }
     }
-    printf("+----------+---------------------+---------------------+\n");
+    printf("+----------+----------------------+-------------------+ \n");
 }
     
 
