@@ -12,7 +12,18 @@ typedef struct {
     int berat_hasil_panen;
 } Produk;
 
-void TampilkanLaporan() {
+const char* tentukanPeriode(int count) {
+    int periode = (count - 1) / 4 + 1;
+    switch (periode) {
+        case 1: return "Q1";
+        case 2: return "Q2";
+        case 3: return "Q3";
+        case 4: return "Q4";
+        default: return "N/A";
+    }
+}
+
+    void TampilkanLaporan() {
     FILE *file = fopen(FILENAME, "r");
     if (file == NULL) {
         printf("Error: Tidak dapat membuka file.\n");
@@ -20,30 +31,24 @@ void TampilkanLaporan() {
     }
 
     Produk produk;
-    int totalBerat[4] = {0, 0, 0, 0};
-    int count[4] = {0, 0, 0, 0};
+    int totalBerat = 0;
+    int count = 0;
+    int periodeCount = 0;
+    double rataRata = 0.0;
+    const char *kategori;
+    const char *periode;
+
+    printf("+----------------------+-------------------+-------------------+ \n");
+    printf("| Rata-rata Berat (kg) | Kategori Panen    | Periode Panen     | \n");
+    printf("+----------------------+-------------------+-------------------+ \n");
 
     while (fscanf(file, "%49s %49s %49s %49s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
-        int month;
-        sscanf(produk.tanggal_panen, "%*4d-%2d-%*2d", &month); // mengambil bulan dari tanggal panen
-        int period = (month - 1) / 3; // 0: Jan-Mar, 1: Apr-Jun, 2: Jul-Sep, 3: Oct-Dec
-        totalBerat[period] += produk.berat_hasil_panen;
-        count[period]++;
-    }
-    fclose(file);
-
-    // Cetak laporan dalam format tabel
-    printf("+----------+----------------------+-------------------+ \n");
-    printf("| Periode  | Rata-rata Berat (kg) | Kategori Panen    | \n");
-    printf("+----------+----------------------+-------------------+ \n");
-
-    for (int i = 0; i < 4; i++) {
-        printf("|    %d     |", i + 1);
-        if (count[i] == 0) {
-            printf("         N/A          |        N/A        | \n");
-        } else {
-            double rataRata = (double)totalBerat[i] / count[i];
-            const char *kategori;
+        totalBerat += produk.berat_hasil_panen;
+        count++;
+        periodeCount++;
+      
+     if (periodeCount == 4) {
+            rataRata = (double)totalBerat / periodeCount;
             if (rataRata > 1000) {
                 kategori = "Melimpah";
             } else if (rataRata > 500) {
@@ -51,12 +56,29 @@ void TampilkanLaporan() {
             } else {
                 kategori = "Sedikit";
             }
-            printf("   %10.2f         |      %-5s      |\n", rataRata, kategori);
+            periode = tentukanPeriode(count);
+            printf("|   %10.2f         |      %-5s      |      %-5s      |\n", rataRata, kategori, periode);
+            totalBerat = 0;
+            periodeCount = 0;
         }
     }
-    printf("+----------+----------------------+-------------------+ \n");
+     if (periodeCount > 0) {
+        rataRata = (double)totalBerat / periodeCount;
+        if (rataRata > 1000) {
+            kategori = "Melimpah";
+        } else if (rataRata > 500) {
+            kategori = "Banyak";
+        } else {
+            kategori = "Sedikit";
+        }
+        periode = tentukanPeriode(count);
+        printf("|   %10.2f         |      %-5s         |      %-5s         |\n", rataRata, kategori, periode);
+    }
+
+    printf("+----------------------+-------------------+-------------------+ \n");
+    fclose(file);
 }
-    
+
 
 void welcomeMessage() {
     printf("   _____ _     _                   _                     _                         _____                         _ _    _____ _ _           _____        _ _ \n");

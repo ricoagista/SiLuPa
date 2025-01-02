@@ -183,7 +183,7 @@ int main() {
     do {
         printf("\n1. Masukan data produk\n");
         printf("2. Tampilkan daftar produk\n");
-        printf("3. Uptade data produk\n");
+        printf("3. Update data produk\n");
         printf("4. Hapus data produk\n");
         printf("5. Tampilkan Hasil Laporan\n");
         printf("6. Keluar\n");
