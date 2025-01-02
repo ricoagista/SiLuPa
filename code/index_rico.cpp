@@ -15,10 +15,10 @@ typedef struct {
 const char* tentukanPeriode(int count) {
     int periode = (count - 1) / 4 + 1;
     switch (periode) {
-        case 1: return "Q1";
-        case 2: return "Q2";
-        case 3: return "Q3";
-        case 4: return "Q4";
+        case 1: return "Q1     ";
+        case 2: return "Q2     ";
+        case 3: return "Q3     ";
+        case 4: return "Q4     ";
         default: return "N/A";
     }
 }
@@ -39,7 +39,7 @@ const char* tentukanPeriode(int count) {
     const char *periode;
 
     printf("+----------------------+-------------------+-------------------+ \n");
-    printf("| Rata-rata Berat (kg) | Kategori Panen    | Periode Panen     | \n");
+    printf("| Rata-rata Berat (kg) |   Kategori Panen  |   Periode Panen   | \n");
     printf("+----------------------+-------------------+-------------------+ \n");
 
     while (fscanf(file, "%49s %49s %49s %49s %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.tanggal_tanam, &produk.berat_hasil_panen) != EOF) {
@@ -52,7 +52,7 @@ const char* tentukanPeriode(int count) {
             if (rataRata > 1000) {
                 kategori = "Melimpah";
             } else if (rataRata > 500) {
-                kategori = "Banyak";
+                kategori = "Banyak ";
             } else {
                 kategori = "Sedikit";
             }
@@ -72,7 +72,7 @@ const char* tentukanPeriode(int count) {
             kategori = "Sedikit";
         }
         periode = tentukanPeriode(count);
-        printf("|   %10.2f         |      %-5s         |      %-5s         |\n", rataRata, kategori, periode);
+        printf("|   %10.2f         |      %-5s       |      %-5s      |\n", rataRata, kategori, periode);
     }
 
     printf("+----------------------+-------------------+-------------------+ \n");
